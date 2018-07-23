@@ -1,4 +1,5 @@
 import tplLrc from '../template/lrc.art';
+import _ from 'lodash';
 
 class Lrc {
     constructor (options) {
@@ -124,8 +125,21 @@ class Lrc {
             }
             // sort by time
             lrc = lrc.filter((item) => item[1]);
-            lrc.sort((a, b) => a[0] - b[0]);
-            return lrc;
+            lrc = _.sortBy(lrc, [0]);
+
+            // combine lyrics which have the same time
+            const combinedLrc = [];
+            for (let i = 0; i < lrc.length; i++) {
+                const time = lrc[i][0];
+                const text = lrc[i][1];
+
+                if (i > 0 && time === lrc[i-1][0]) {
+                    combinedLrc[combinedLrc.length - 1][1] += "<br />" + text;
+                } else {
+                    combinedLrc.push([time, text]);
+                }
+            }
+            return combinedLrc;
         }
         else {
             return [];
