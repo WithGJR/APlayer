@@ -1,5 +1,5 @@
 $aplayer-height: 66px;
-$lrc-height: 30px;
+$lrc-height: 100px;
 $aplayer-height-lrc: $aplayer-height + $lrc-height - 6;
 
 .aplayer {
@@ -540,15 +540,12 @@ $aplayer-height-lrc: $aplayer-height + $lrc-height - 6;
         }
 
         p {
-            font-size: 12px;
+            font-size: 18px;
             color: #666;
-            line-height: 16px !important;
-            height: 16px !important;
             padding: 0 !important;
             margin: 0 !important;
             transition: all 0.5s ease-out;
             opacity: 0.4;
-            overflow: hidden;
 
             &.aplayer-lrc-current {
                 opacity: 1;

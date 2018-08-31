@@ -32,13 +32,18 @@ class Lrc {
 
     update (currentTime = this.player.audio.currentTime) {
         if (this.index > this.current.length - 1 || currentTime < this.current[this.index][0] || (!this.current[this.index + 1] || currentTime >= this.current[this.index + 1][0])) {
+            const lyricParagraphs = this.container.getElementsByTagName('p');
+
             for (let i = 0; i < this.current.length; i++) {
                 if (currentTime >= this.current[i][0] && (!this.current[i + 1] || currentTime < this.current[i + 1][0])) {
                     this.index = i;
-                    this.container.style.transform = `translateY(${-this.index * 16}px)`;
-                    this.container.style.webkitTransform = `translateY(${-this.index * 16}px)`;
+                    const movedHeight = _.reduce(_.take(lyricParagraphs, i), function (totalHeight, p) {
+                        return totalHeight + p.offsetHeight;
+                    }, 0);
+                    this.container.style.transform = `translateY(${-movedHeight}px)`;
+                    this.container.style.webkitTransform = `translateY(${-movedHeight}px)`;
                     this.container.getElementsByClassName('aplayer-lrc-current')[0].classList.remove('aplayer-lrc-current');
-                    this.container.getElementsByTagName('p')[i].classList.add('aplayer-lrc-current');
+                    lyricParagraphs[i].classList.add('aplayer-lrc-current');
                 }
             }
         }
